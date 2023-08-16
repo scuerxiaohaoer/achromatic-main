@@ -7,11 +7,11 @@ Created on Wed Nov 18 16:48:50 2020
 import scipy.io
 import numpy as np
 
-EPOCH_NUMS = 1320
+EPOCH_NUMS = 1000
 
-INTERUPT_INDEX =1200
+INTERUPT_INDEX = 0
 
-WEIGHT_DECAY = 0.00001
+WEIGHT_DECAY = 1e-5
 
 MAX_TO_KEEP = 1
 
@@ -29,24 +29,13 @@ VALIDATION_LEARNING_RATE = 0.0
 
 DROPOUT = 1.0
 
-#TRAINING_CROSS_ITEMS = [0]
-TRAINING_CROSS_ITEMS = list(range(0,1))
+TRAINING_CROSS_ITEMS = list(range(0,450))
 
-VALIDATION_CROSS_ITEMS = list(range(471,501))
+VALIDATION_CROSS_ITEMS = list(range(450,480))
 
-TEST_CROSS_ITEMS = list(range(471,500))
+TEST_CROSS_ITEMS = list(range(480,500))
 
-
-#TRAINING_CROSS_ITEMS = list(range(0, 472))
-
-#VALIDATION_CROSS_ITEMS = list(range(450, 490))
-
-#TEST_CROSS_ITEMS = list(range(490, 501))
-
-#TEST_EXTERNEL_ITEMS = list(range(0,50))
-
-#TEST_EXTERNEL_ITEMS = [0,31,451]
-TEST_EXTERNEL_ITEMS =  list(range(471,500))
+TEST_EXTERNEL_ITEMS =  list(range(0,1))
 
 '''Enable'''
 PREPROCESS_ENABLE = False
@@ -96,11 +85,13 @@ spectral_num = 10
 complex_num = 8
 
 wave_list = []
+
 refractive_list = []
 for i in range(0, spectral_num):
     for j in range(0, complex_num):
         wave_list.append(400+i*(300//spectral_num))
         refractive_list.append((550 * 1.493)/(400+i*(300//spectral_num)))
+        
 wave_lengths = np.array(wave_list) * 1e-9
 
 refractive_idcs = (np.array(refractive_list))
