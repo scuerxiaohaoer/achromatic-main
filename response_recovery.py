@@ -37,7 +37,7 @@ def test_external(): #'''测试主体函数'''
     config.gpu_options.allow_growth = True
     with tf.Session(config=config) as sess:
         test_externel_function = MainFunction(sess)
-        ckpt_path = 'all_results/ckpt_result/1200.ckpt'
+        ckpt_path = 'all_results/ckpt_result/1266.ckpt'
         test_externel_function.restore(ckpt_path)
         test_externel_function.test_externel()
 
