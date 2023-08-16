@@ -152,7 +152,7 @@ def compute_percep_loss(input, output):
     return p0+p1+p2+p3+p4
 
 class MainFunction:
-    '''训练及测试函数主体, SSIM=percep, camera_response=hdm_GT_phase'''
+    '''SSIM=percep, camera_response=hdm_GT_phase'''
 
     def __init__(self, sess=None):
         self.sess = sess
@@ -189,7 +189,7 @@ class MainFunction:
         confidence = tf.reshape(confidence, shape=[-1, confident_rgb_w, confident_rgb_h, 1])      
         print('confidence shape is : ', confidence.get_shape())
         
-        '''confident_rgb每一个通道结果乘以置信度后沿w和h相加，得到最终三个通道的响应曲线预测值'''
+ 
         constructed_r = tf.matmul(tf.reduce_sum(confidence * confident_rgb[:,:,:,1 : BASIC_NUMS + 1], axis=(1, 2)), BASIC_FUNCTIONS.astype(np.float32), transpose_b = True)
         constructed_g = tf.matmul(tf.reduce_sum(confidence * confident_rgb[:,:,:,BASIC_NUMS + 1 : 2 * BASIC_NUMS + 1], axis=(1, 2)), BASIC_FUNCTIONS.astype(np.float32), transpose_b = True)
         constructed_b = tf.matmul(tf.reduce_sum(confidence * confident_rgb[:,:,:,2 * BASIC_NUMS + 1 : 3 * BASIC_NUMS + 1], axis=(1, 2)), BASIC_FUNCTIONS.astype(np.float32), transpose_b = True)
@@ -230,13 +230,7 @@ class MainFunction:
             self.UNet_output_R = self.UNet(tf.expand_dims(images[:,:,:,0],axis=-1), self.dropout, 'UNet_1',self.is_training) 
             self.UNet_output_G = self.UNet(tf.expand_dims(images[:,:,:,1],axis=-1), self.dropout, 'UNet_2',self.is_training)
             self.UNet_output_B = self.UNet(tf.expand_dims(images[:,:,:,2],axis=-1), self.dropout, 'UNet_3',self.is_training)        
-        # '''UNet'''
-        # #with slim.arg_scope([slim.conv2d, slim.fully_connected], activation_fn = tf.nn.relu, weights_regularizer=slim.l2_regularizer(WEIGHT_DECAY)):
-        # with tf.variable_scope("UNet"):    
-        #     self.UNet_output_R = self.UNet(tf.expand_dims(images[:,:,:,0],axis=-1), self.dropout) #spatial_attation放在UNet内部最高维特征位置处
-        # with tf.variable_scope("UNet",reuse=True): 
-        #     self.UNet_output_G = self.UNet(tf.expand_dims(images[:,:,:,1],axis=-1), self.dropout)
-        #     self.UNet_output_B = self.UNet(tf.expand_dims(images[:,:,:,2],axis=-1), self.dropout)
+
             
         '''Attation'''      
         self.channel_attation_R = self.channel_attation(self.UNet_output_R, 'R_channel_attation')
@@ -296,24 +290,12 @@ class MainFunction:
                     self.achromatic_B = tf.reduce_sum(self.achromatic_B, axis=3)
                     self.achromatic_image = tf.stack([self.achromatic_R,self.achromatic_G,self.achromatic_B], axis=3)
                     self.recovered_pahse = self.camera_response
-        # with tf.variable_scope("Phase", reuse=False):   
-        #     self.recovered_pahse = self.build_phase(tf.expand_dims(self.camera_response, axis=-1), self.dropout, self.is_training)
-        #     self.recovered_pahse = tf.reshape(self.recovered_pahse, shape=[-1, PHASE_SIZE, PHASE_SIZE])
                 
         '''Loss'''
         self.phase_MSE_loss = compute_l2_loss(self.camera_response, self.camera_response)
         self.MSE_loss = compute_l2_loss(self.achromatic_image, self.ground_truth)
         self.percep_loss = compute_percep_loss(self.achromatic_image, self.ground_truth) * 2
-        self.loss = self.MSE_loss + self.percep_loss 
-        # self.perceptual_loss = 0
-        # for i in range(0,10):
-        #     self.perceptual_loss = self.perceptual_loss + compute_percep_loss(self.ground_truth[:,:,:,3*i:(3*i+3)],self.fake_image[:,:,:,3*i:(3*i+3)])
-        # self.perceptual_loss =self.perceptual_loss + compute_percep_loss(self.ground_truth[:,:,:,28:31],self.fake_image[:,:,:,28:31])
-        # self.MSE_loss = (compute_l2_loss(self.fake_image,self.ground_truth)) # MSE_loss
-        # self.SSIM_loss = self.perceptual_loss
-        # #self.SSIM_loss = (1 - tf.reduce_mean(tf.image.ssim(self.fake_image,self.ground_truth,max_val=1.0)))
-        #self.COS_loss = tf.losses.cosine_distance(tf.nn.l2_normalize(self.fake_image,axis=-1),tf.nn.l2_normalize(self.ground_truth,axis=-1),axis=-1)      
-        # self.G_loss = 6*self.MSE_loss  + self.SSIM_loss
+        self.loss = self.MSE_loss + self.percep_loss + self.phase_MSE_loss
 
         scalar_summaries_G = []
         scalar_summaries_G.append(tf.summary.scalar('G_loss', self.loss))
