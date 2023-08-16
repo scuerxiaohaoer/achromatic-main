@@ -35,7 +35,7 @@ VALIDATION_CROSS_ITEMS = list(range(450,480))
 
 TEST_CROSS_ITEMS = list(range(480,500))
 
-TEST_EXTERNEL_ITEMS =  list(range(0,1))
+TEST_EXTERNEL_ITEMS =  list(range(0,3))
 
 '''Enable'''
 PREPROCESS_ENABLE = False
