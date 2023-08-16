@@ -20,7 +20,7 @@ def load_data(items):
     num = 1
     for item in items:
         begin = time.time()
-        data_item_dir = '../image_data/aspheric_pkl/' + str(item) +'.pkl'
+        data_item_dir = './test_pkl/' + str(item) +'.pkl'
         with open(data_item_dir, 'rb') as file_object:
             data = data + [pickle.load(file_object)]
             #print('Now', num, 'pkl is loaded')
