@@ -1144,13 +1144,6 @@ class ZernikeSystem():
             sensor_img = depth_dep_convolution(input_img, self.psfs, disc_depth_map=depth_map)
         else:
             sensor_img = img_psf_conv(input_img, self.target_psf)
-            '''
-            sensor_img = get_intensities(sensor_img)
-            input_energy = tf.reduce_sum(get_intensities(input_img), axis=[1,2], keep_dims=True)
-            output_energy = tf.reduce_sum(sensor_img, axis=[1,2], keep_dims=True)
-            normalize_weight = input_energy / output_energy
-            sensor_img = sensor_img * normalize_weight
-            '''
             sensor_img = tf.abs(sensor_img)
             input_energy = tf.reduce_sum(tf.abs(input_img), axis=[1,2], keep_dims=True)
             output_energy = tf.reduce_sum(sensor_img, axis=[1,2], keep_dims=True)
