@@ -1,9 +1,10 @@
 # achromatic-main
-![image](https://github.com/scuerxiaohaoer/achromatic-main/assets/112793866/930487bd-3e90-4286-824d-c566a84b2a49)
+![framework (1)](https://github.com/scuerxiaohaoer/achromatic-main/assets/112793866/55514593-51b6-4150-847b-0b0ad29f8f10)
 
 # Deep learned virtual lens conjugated with real singlet lens for broadband achromatic imaging
 
 This repository contains the official implemention of the paper *Deep learned virtual lens conjugated with real singlet lens for broadband achromatic imaging* .
+
 
 ### Testing
 Please download the pre-trained model ckpt at
