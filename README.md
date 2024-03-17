@@ -1,9 +1,9 @@
 # achromatic-main
 ![framework (1)](https://github.com/scuerxiaohaoer/achromatic-main/assets/112793866/55514593-51b6-4150-847b-0b0ad29f8f10)
 
-# Deep learned virtual lens conjugated with real singlet lens for broadband achromatic imaging
+# Wholly differentiable Virtual Lens for ultrathin-plate broadband achromatic imaging
 
-This repository contains the official implemention of the paper *Deep learned virtual lens conjugated with real singlet lens for broadband achromatic imaging* .
+This repository contains the official implemention of the paper *Wholly differentiable Virtual Lens for ultrathin-plate broadband achromatic imaging* .
 
 
 ### Testing
