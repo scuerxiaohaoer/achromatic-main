@@ -1,5 +1,5 @@
 # achromatic-main
-![framework (1)](https://github.com/scuerxiaohaoer/achromatic-main/assets/112793866/55514593-51b6-4150-847b-0b0ad29f8f10)
+![微信图片_20240811134741](https://github.com/user-attachments/assets/2cdc138b-6a7e-42e5-9603-512b4069cdd3)
 
 # Wholly differentiable Virtual Lens for ultrathin-plate broadband achromatic imaging
 
